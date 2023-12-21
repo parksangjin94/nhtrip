@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hntrip.root.hit.mapper.HitMapper">
+	<resultMap type="com.hntrip.root.hit.dto.HitDTO" id="hit">
+		<result property="writeNo" column="write_no"/>
+		<result property="id" column="id"/>
+	</resultMap>
+	<select id="getMyHit" resultMap="hit">
+		select * from board_hit where write_no = #{writeNo}
+	</select>
+	<insert id="addMyHit">
+		insert into board_hit values(#{writeNo}, #{id})
+	</insert>
+	<delete id="delMyHit">
+		delete from board_hit where write_no = #{writeNo} and id = #{id}
+	</delete>
+	<select id="allMyHit" resultMap="hit">
+		select write_no from board_hit where id = #{id}
+	</select>
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.hntrip.root.follow.mapper.FollowMapper">
+	<resultMap type="com.hntrip.root.follow.dto.FollowDTO" id="follow">
+		<result property="id" column="id"/>
+		<result property="followId" column="follow_id"/>
+	</resultMap>
+	<select id="getMyFollow" resultMap="follow">
+		select * from follow where id = #{id}
+	</select>
+	<insert id="addMyFollow">
+		insert into follow values(#{id}, #{followId})
+	</insert>
+	<delete id="delMyFollow">
+		delete from follow where id = #{id} and follow_id = #{followId}
+	</delete>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+   <mapper namespace="com.hntrip.root.file.mapper.FileMapper">
+
+     <resultMap type="com.hntrip.root.file.dto.FileDTO" id="file">
+      <id property="writeNo" column="write_no"/>
+      <result property="fileName" column="file_name"/>
+   </resultMap> 
+  
+     <select id="searchWriteNo" resultMap="file">
+      select * from 
+      file_name 
+      where write_no in
+      <foreach collection="list" item="list" open="(" close=")"
+         separator=",">
+         #{list.writeNo}
+      </foreach>
+		<![CDATA[
+			
+		and file_name like '0%'
+		
+		]]>
+
+     </select>
+     
+   <select id="getMyImg" resultMap="file">
+      select * from file_name where write_no = #{writeNo} order by file_name desc
+   </select>
+   <select id="hitMyImg" resultMap="file">
+      select * from file_name where write_no in
+      <foreach item="item" collection="list" open="(" separator="," close=")">
+         #{item.writeNo}
+      </foreach>
+      	<![CDATA[
+			
+		and file_name like '0%'
+		
+		]]>
+   </select>
+   
+   <insert id="insert">
+       <foreach collection="list" item="list" separator=" " open="insert all" close="select * from dual">
+        into file_name (file_name, write_no)
+        values
+        (#{list.fileName}, #{list.writeNo})
+        </foreach>
+    </insert>
+</mapper>

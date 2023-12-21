@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.hntrip.root.board.mapper.BoardMapper">
+   <resultMap type="com.hntrip.root.board.dto.BoardDTO" id="board">  
+      <id property="writeNo" column="write_no"/>
+      <result property="id" column="id"/>
+      <result property="title" column="title"/>
+      <result property="content" column="content"/>
+      <result property="hit" column="hit"/>
+      <result property="country" column="country"/>
+      <result property="city" column="city"/>
+      <result property="saveDate" column="savedate"/>
+   </resultMap>
+
+   <select id="searchByCountry" resultMap="board">
+      select * from board where country=#{word} order by hit desc
+   </select>
+   <select id="searchByCity" resultMap="board">
+      select * from board where city=#{word} order by hit desc
+   </select>
+   <select id="searchByTitle" resultMap="board">
+      select * from board where title=#{word} order by hit desc
+   </select>
+   <select id="getMyData" resultMap="board">
+      select * from board where write_no = #{writeNo}
+   </select>
+   <update id="upHit">
+      update board set hit = hit + 1 where write_no = #{writeNo}
+   </update>
+   <update id="downHit">
+      update board set hit = hit - 1 where write_no = #{writeNo}
+   </update>
+   <select id="nowHit" resultMap="board">
+      select hit from board where write_no = #{writeNo}
+   </select>
+   <insert id="insert">
+      insert into board
+      (write_no,title,content, country, city,id,saveDate)
+      values
+      (board_seq.nextval, #{title}, #{content},
+      #{country},#{city},#{id},#{saveDate})
+   </insert>
+   <select id="getwriteNo" resultType="int">
+   select max(write_no) from board where id= #{id}
+   
+   </select>
+   <select id="getMember" resultMap="board">
+      select * from board where id = #{id} order by savedate desc
+   </select>
+   
+   <select id="getCountry" resultMap="board">
+      select distinct country from board where id = #{id}
+   
+   </select>
+   
+   
+  </mapper>

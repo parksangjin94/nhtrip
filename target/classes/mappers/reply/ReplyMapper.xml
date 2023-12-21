@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.hntrip.root.reply.mapper.ReplyMapper">
+	<resultMap type="com.hntrip.root.reply.dto.ReplyDTO" id="reply">
+		<result property="writeNo" column="write_no"/>
+		<result property="id" column="id"/>
+		<result property="content" column="content"/>
+	</resultMap>
+	<select id="replyData" resultMap="reply">
+		select * from reply where write_no = #{writeNo}
+	</select>
+	<insert id="replyAdd">
+		insert into reply values(#{writeNo}, #{id}, #{content})
+	</insert>
+</mapper>
